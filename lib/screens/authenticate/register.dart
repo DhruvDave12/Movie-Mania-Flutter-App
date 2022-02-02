@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_mania/models/user_data.dart';
 import 'package:movie_mania/services/auth.dart';
 
 class Register extends StatefulWidget {
@@ -15,7 +17,10 @@ class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   String email = "";
   String password = "";
-
+  String name = "";
+  String gender = "";
+  String address = "";
+  int age = 0;
   String error = "";
 
   @override
@@ -79,11 +84,89 @@ class _RegisterState extends State<Register> {
                 SizedBox(
                   height: 20.0,
                 ),
+                TextFormField(
+                    validator: (val) => val!.isEmpty ? "Enter a name" : null,
+                    onChanged: (val) => {setState(() => name = val)},
+                    decoration: InputDecoration(
+                        hintText: "Name",
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2.0)))),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    validator: (val) => val!.isEmpty ? "Enter Gender" : null,
+                    onChanged: (val) => {setState(() => gender = val)},
+                    decoration: InputDecoration(
+                        hintText: "Gender",
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2.0)))),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    validator: (val) => val!.isEmpty ? "Enter age" : null,
+                    onChanged: (val) => {setState(() => age = int.parse(val))},
+                    decoration: InputDecoration(
+                        hintText: "Age",
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2.0)))),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                    validator: (val) =>
+                        val!.isEmpty ? "Enter an address" : null,
+                    onChanged: (val) => {setState(() => address = val)},
+                    decoration: InputDecoration(
+                        hintText: "Address",
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.white, width: 2.0)),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2.0)))),
+                SizedBox(
+                  height: 20.0,
+                ),
                 RaisedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      dynamic result = await _auth.registerWithEmailAndPassword(
-                          email, password);
+                      // Using below this.((value) {}) we can store user data in it.
+                      // Make a data object where we store stuff.
+                      userData data = new userData(
+                          name: name,
+                          gender: gender,
+                          address: address,
+                          age: age);
+                      dynamic result = await _auth
+                          .registerWithEmailAndPassword(email, password)
+                          .then((value) async {
+                        await FirebaseFirestore.instance
+                            .collection('UserData')
+                            .doc(value.uid)
+                            .set(data.toMap());
+                      });
 
                       if (result == null) {
                         setState(() {
