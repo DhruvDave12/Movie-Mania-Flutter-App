@@ -154,14 +154,18 @@ class _RegisterState extends State<Register> {
                     if (_formKey.currentState!.validate()) {
                       // Using below this.((value) {}) we can store user data in it.
                       // Make a data object where we store stuff.
-                      userData data = new userData(
-                          name: name,
-                          gender: gender,
-                          address: address,
-                          age: age);
+
                       dynamic result = await _auth
                           .registerWithEmailAndPassword(email, password)
                           .then((value) async {
+                        print(value.uid);
+                        userData data = new userData(
+                            uid: value.uid,
+                            name: name,
+                            gender: gender,
+                            address: address,
+                            age: age);
+
                         await FirebaseFirestore.instance
                             .collection('UserData')
                             .doc(value.uid)

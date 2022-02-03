@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movie_mania/models/user_data.dart';
+import 'package:movie_mania/screens/profile/profile.dart';
 import 'package:movie_mania/services/auth.dart';
+import 'package:movie_mania/services/user_database.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
+  final String uid;
+  Home({required this.uid});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -18,17 +25,16 @@ class _HomeState extends State<Home> {
   }
 
   // Here we will be creating the Home, Search and Profile Sections.
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
     ),
     Text(
       'Index 1: Search',
     ),
-    Text(
-      'Index 2: Profile',
-    ),
+    Profile()
   ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,12 +50,28 @@ class _HomeState extends State<Home> {
                 icon: Icon(Icons.info, color: Colors.white),
                 label: SizedBox(
                   height: 0.0,
+                )),
+            FlatButton.icon(
+                onPressed: () async {
+                  await _auth.signOut();
+                },
+                icon: Icon(Icons.logout, color: Colors.white),
+                label: SizedBox(
+                  height: 0.0,
                 ))
           ],
         ),
-        body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        body: StreamProvider<userData>.value(
+            value: Database(uid: widget.uid).dataUser,
+            initialData: userData(
+                uid: widget.uid,
+                name: 'New',
+                gender: 'Not Specified',
+                address: 'No Address',
+                age: 10),
+            child: Center(
+              child: _widgetOptions.elementAt(_selectedIndex),
+            )),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

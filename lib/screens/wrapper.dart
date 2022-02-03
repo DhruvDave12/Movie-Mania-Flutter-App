@@ -10,6 +10,6 @@ class Wrapper extends StatelessWidget {
     // Listening to the stream
     final user = Provider.of<Userr?>(context);
 
-    return user != null ? Home() : Authenticate();
+    return user != null ? Home(uid: user.uid) : Authenticate();
   }
 }
