@@ -1,14 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:movie_mania/models/user_data.dart';
 import 'package:movie_mania/screens/profile/profile.dart';
 import 'package:movie_mania/services/auth.dart';
 import 'package:movie_mania/services/user_database.dart';
 import 'package:provider/provider.dart';
-
 class Home extends StatefulWidget {
   final String uid;
-  Home({required this.uid});
 
+  Home({required this.uid});
   @override
   _HomeState createState() => _HomeState();
 }

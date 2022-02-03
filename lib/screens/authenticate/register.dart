@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_mania/models/user_data.dart';
 import 'package:movie_mania/services/auth.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
 
   Register({required this.toggleView});
-
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -22,6 +24,16 @@ class _RegisterState extends State<Register> {
   String address = "";
   int age = 0;
   String error = "";
+  String uploadedFileURL = '';
+  File _image = File('assets/images/user.jfif');
+
+  Future chooseFile() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (image == null) return;
+    final imageTemp = File(image.path);
+    this._image = imageTemp;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +61,14 @@ class _RegisterState extends State<Register> {
             key: _formKey,
             child: Column(
               children: [
+                SizedBox(
+                  height: 20.0,
+                ),
+                RaisedButton(
+                  child: Text('Choose File'),
+                  onPressed: chooseFile,
+                  color: Colors.cyan,
+                ),
                 SizedBox(height: 20.0),
                 TextFormField(
                     validator: (val) => val!.isEmpty ? "Enter an email" : null,
@@ -170,6 +190,10 @@ class _RegisterState extends State<Register> {
                             .collection('UserData')
                             .doc(value.uid)
                             .set(data.toMap());
+                        print(_image);
+                        await FirebaseStorage.instance
+                            .ref('files/image_${value.uid}.jpeg')
+                            .putFile(_image);
                       });
 
                       if (result == null) {

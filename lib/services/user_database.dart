@@ -22,7 +22,7 @@ class Database {
         name: snapshot['name'],
         gender: snapshot['gender'],
         address: snapshot['address'],
-        age: snapshot['age']);
+        age: snapshot['age'],);
   }
 
   Stream<userData> get dataUser {
