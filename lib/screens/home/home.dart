@@ -6,6 +6,7 @@ import 'package:movie_mania/screens/profile/profile.dart';
 import 'package:movie_mania/services/auth.dart';
 import 'package:movie_mania/services/user_database.dart';
 import 'package:provider/provider.dart';
+
 class Home extends StatefulWidget {
   final String uid;
 
@@ -27,9 +28,7 @@ class _HomeState extends State<Home> {
 
   // Here we will be creating the Home, Search and Profile Sections.
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-    ),
+    Text('Index 0: Home'),
     Text(
       'Index 1: Search',
     ),
