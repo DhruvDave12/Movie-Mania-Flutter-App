@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class PopularTVShows extends StatefulWidget {
   List populartvshows;
@@ -19,7 +20,12 @@ class _PopularTVShowsState extends State<PopularTVShows> {
           itemCount: widget.populartvshows.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Details(dets: widget.populartvshows[index])),
+                );
+              },
               child: Container(
                 width: 140,
                 padding: EdgeInsets.all(10),

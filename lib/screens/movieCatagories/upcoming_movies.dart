@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class UpcomingMovies extends StatefulWidget {
   List upcoming;
@@ -17,7 +18,12 @@ class _UpcomingMoviesState extends State<UpcomingMovies> {
           itemCount: widget.upcoming.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Details(dets: widget.upcoming[index])),
+                );
+              },
               child: Container(
                 width: 140,
                 padding: EdgeInsets.all(10),

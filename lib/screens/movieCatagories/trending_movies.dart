@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class TrendingMovies extends StatefulWidget {
   List trendingMovies;
@@ -18,7 +19,12 @@ class _TrendingMoviesState extends State<TrendingMovies> {
           itemCount: widget.trendingMovies.length,
           itemBuilder: (context, index) {
             return InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Details(dets: widget.trendingMovies[index])),
+                );
+              },
               child: Container(
                 width: 140,
                 padding: EdgeInsets.all(10),
