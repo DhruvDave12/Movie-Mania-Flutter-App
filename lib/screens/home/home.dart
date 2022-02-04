@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:movie_mania/models/user_data.dart';
+import 'package:movie_mania/screens/homepage/homepage.dart';
 import 'package:movie_mania/screens/profile/profile.dart';
 import 'package:movie_mania/services/auth.dart';
 import 'package:movie_mania/services/user_database.dart';
@@ -28,7 +29,7 @@ class _HomeState extends State<Home> {
 
   // Here we will be creating the Home, Search and Profile Sections.
   static List<Widget> _widgetOptions = <Widget>[
-    Text('Index 0: Home'),
+    HomePage(),
     Text(
       'Index 1: Search',
     ),
@@ -43,22 +44,18 @@ class _HomeState extends State<Home> {
           backgroundColor: Colors.red,
           title: Text("Movie Mania"),
           actions: [
-            FlatButton.icon(
-                onPressed: () async {
-                  // Render About Us page here
-                },
-                icon: Icon(Icons.info, color: Colors.white),
-                label: SizedBox(
-                  height: 0.0,
-                )),
-            FlatButton.icon(
-                onPressed: () async {
-                  await _auth.signOut();
-                },
-                icon: Icon(Icons.logout, color: Colors.white),
-                label: SizedBox(
-                  height: 0.0,
-                ))
+            IconButton(
+              onPressed: () async {
+                // Render About Us page here
+              },
+              icon: Icon(Icons.info, color: Colors.white),
+            ),
+            IconButton(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              icon: Icon(Icons.logout, color: Colors.white),
+            )
           ],
         ),
         body: StreamProvider<userData>.value(

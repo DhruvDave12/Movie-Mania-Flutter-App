@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^10.2.6
   flutter_svg: ^1.0.3
   google_fonts: ^2.2.0
+  tmdb_api: ^2.1.0
 
 dev_dependencies:
   flutter_test:
