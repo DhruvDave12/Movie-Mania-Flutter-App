@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class TrendingMovies extends StatefulWidget {
@@ -22,7 +23,9 @@ class _TrendingMoviesState extends State<TrendingMovies> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Details(dets: widget.trendingMovies[index])),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          Details(dets: widget.trendingMovies[index], other: widget.trendingMovies)),
                 );
               },
               child: Container(
@@ -38,11 +41,25 @@ class _TrendingMoviesState extends State<TrendingMovies> {
                               image: NetworkImage(
                                   'https://image.tmdb.org/t/p/w500${widget.trendingMovies[index]['poster_path']}'))),
                     ),
-                    Container(
-                      child: Text(widget.trendingMovies[index]['title'] != null
-                          ? widget.trendingMovies[index]['title']
-                          : 'Loading'),
-                    )
+                    widget.trendingMovies[index]['title'] != null
+                        ? Container(
+                            child: Text(
+                                widget.trendingMovies[index]['title'] != null
+                                    ? widget.trendingMovies[index]['title']
+                                    : widget.trendingMovies[index]
+                                        ['original_title'], style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                        )),
+                          )
+                        : Container(
+                            child: Text(
+                                widget.trendingMovies[index]['name'] != null
+                                    ? widget.trendingMovies[index]['name']
+                                    : widget.trendingMovies[index]
+                                        ['original_name'], style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                        )),
+                          )
                   ],
                 ),
               ),

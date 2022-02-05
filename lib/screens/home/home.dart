@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania/models/user_data.dart';
 import 'package:movie_mania/screens/homepage/homepage.dart';
 import 'package:movie_mania/screens/profile/profile.dart';
@@ -42,7 +43,10 @@ class _HomeState extends State<Home> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text("Movie Mania"),
+          title: Text(
+            "MOVIE MANIA",
+            style: GoogleFonts.roboto(),
+          ),
           actions: [
             IconButton(
               onPressed: () async {
@@ -70,22 +74,32 @@ class _HomeState extends State<Home> {
               child: _widgetOptions.elementAt(_selectedIndex),
             )),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.black,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: Colors.white,
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: Colors.white,
+              ),
               label: 'Profile',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.red,
+          selectedItemColor: Colors.white,
           onTap: _onItemTapped,
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class UpcomingMovies extends StatefulWidget {
@@ -21,7 +22,10 @@ class _UpcomingMoviesState extends State<UpcomingMovies> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Details(dets: widget.upcoming[index])),
+                  MaterialPageRoute(
+                      builder: (context) => Details(
+                          dets: widget.upcoming[index],
+                          other: widget.upcoming)),
                 );
               },
               child: Container(
@@ -37,11 +41,25 @@ class _UpcomingMoviesState extends State<UpcomingMovies> {
                               image: NetworkImage(
                                   'https://image.tmdb.org/t/p/w500${widget.upcoming[index]['poster_path']}'))),
                     ),
-                    Container(
-                      child: Text(widget.upcoming[index]['title'] != null
-                          ? widget.upcoming[index]['title']
-                          : 'Loading'),
-                    )
+                    widget.upcoming[index]['title'] != null
+                        ? Container(
+                            child: Text(
+                                widget.upcoming[index]['title'] != null
+                                    ? widget.upcoming[index]['title']
+                                    : widget.upcoming[index]['original_title'],
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                )),
+                          )
+                        : Container(
+                            child: Text(
+                                widget.upcoming[index]['name'] != null
+                                    ? widget.upcoming[index]['name']
+                                    : widget.upcoming[index]['original_name'],
+                                style: GoogleFonts.roboto(
+                                  color: Colors.white,
+                                )),
+                          )
                   ],
                 ),
               ),

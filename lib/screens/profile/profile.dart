@@ -29,7 +29,6 @@ class _ProfileState extends State<Profile> {
     }
 
     getImageURL();
-    print(this.url);
     return SingleChildScrollView(
       child: StreamBuilder<userData>(
           stream: Database(uid: userDat.uid).dataUser,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania/screens/movieDetails/details.dart';
 
 class TopRatedMovies extends StatefulWidget {
@@ -22,8 +23,9 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>
-                          Details(dets: widget.topRatedMovies[index])),
+                      builder: (context) => Details(
+                          dets: widget.topRatedMovies[index],
+                          other: widget.topRatedMovies)),
                 );
               },
               child: Container(
@@ -39,11 +41,25 @@ class _TopRatedMoviesState extends State<TopRatedMovies> {
                               image: NetworkImage(
                                   'https://image.tmdb.org/t/p/w500${widget.topRatedMovies[index]['poster_path']}'))),
                     ),
-                    Container(
-                      child: Text(widget.topRatedMovies[index]['title'] != null
-                          ? widget.topRatedMovies[index]['title']
-                          : 'Loading'),
-                    )
+                    widget.topRatedMovies[index]['title'] != null
+                        ? Container(
+                            child: Text(
+                              widget.topRatedMovies[index]['title'] != null
+                                  ? widget.topRatedMovies[index]['title']
+                                  : widget.topRatedMovies[index]
+                                      ['original_title'],
+                              style: GoogleFonts.roboto(color: Colors.white),
+                            ),
+                          )
+                        : Container(
+                            child: Text(
+                              widget.topRatedMovies[index]['name'] != null
+                                  ? widget.topRatedMovies[index]['name']
+                                  : widget.topRatedMovies[index]
+                                      ['original_name'],
+                              style: GoogleFonts.roboto(color: Colors.white),
+                            ),
+                          )
                   ],
                 ),
               ),
